@@ -10,7 +10,7 @@ const taskRoutes = require('./routes/taskRoutes');
 // Initialize the app
 const app = express();
 
-// Connect to MongoDB
+// Connect to MongoDB Database
 connectDB();
 
 // Middleware for parsing JSON
