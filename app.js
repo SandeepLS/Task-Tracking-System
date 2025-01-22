@@ -3,7 +3,7 @@ const cors = require('cors'); // Import CORS
 require('dotenv').config(); // Load environment variables
 const connectDB = require('./config/db');
 
-// Import routes
+// Import Routes
 const authRoutes = require('./routes/authRoutes'); 
 const taskRoutes = require('./routes/taskRoutes');
 
