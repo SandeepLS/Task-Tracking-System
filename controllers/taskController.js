@@ -85,22 +85,64 @@ exports.updateTask = async (req, res) => {
 
 // Delete a task
 exports.deleteTask = async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.params; // Task ID from the URL
 
     try {
+        // Find the task by ID
         const task = await Task.findById(id);
 
+        // If the task doesn't exist
         if (!task) {
             return res.status(404).json({ message: 'Task not found' });
         }
 
+        // Check if the logged-in user is the creator of the task
         if (task.createdBy.toString() !== req.user.id) {
-            return res.status(403).json({ message: 'Unauthorized' });
+            return res.status(403).json({ message: 'Unauthorized: Only the task creator can delete this task' });
         }
 
-        await task.remove();
+        // Delete the task using deleteOne()
+        await Task.deleteOne({ _id: id }); 
+
         return res.status(200).json({ message: 'Task deleted successfully' });
     } catch (error) {
+        console.error('Error deleting task:', error); // Log error for debugging
         return res.status(500).json({ message: 'Server error', error });
+    }
+};
+
+// (Sachin)Adding Comment to, who posted(Sandeep) the task
+exports.addComment = async (req, res) => {
+    try {
+        const { taskId } = req.params;
+        const { comment } = req.body;
+
+        // Ensure comment is not empty
+        if (!comment) {
+            return res.status(400).json({ message: "Comment cannot be empty." });
+        }
+
+        // Add comment to the task
+        const task = await Task.findById(taskId);
+
+        if (!task) {
+            return res.status(404).json({ message: "Task not found." });
+        }
+
+        // Push new comment
+        task.comments.push({
+            user: req.user.id, // req.user.id is the ID of the logged-in user
+            comment,
+        });
+
+        await task.save();
+
+        res.status(201).json({
+            message: "Comment added successfully.",
+            comments: task.comments,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server error." });
     }
 };

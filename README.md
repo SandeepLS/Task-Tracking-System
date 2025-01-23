@@ -94,4 +94,23 @@ attachments: [String]  // URLs or file paths to attachments
 }
 
 -> Create controllers/taskController.js:
+Create: Post: http://localhost:3000/api/tasks
+GetallTask: Get: http://localhost:3000/api/tasks
+UpdateTask: Put: http://localhost:3000/api/tasks/:taskId
+Delete: Delete: http://localhost:3000/api/tasks/:taskId
+Comment: Post: http://localhost:3000/api/tasks/:taskId/comment
+
 -> Create routes/taskRoutes.js:
+
+-> Login as Sandeep, When Sandeep creates a task, to assign Sachin, After complete the task Who are created the task(Sandeep) only to delete the task.
+And if Login as Sandeep, he can only updated task status(open, progress, complete).
+And if Login as Sachin, he can view task, who are assigned to him.
+And if Login as Sachin, he can give comment to, who posted/created(Sandeep) the task.
+And if Login as Sachin, he can attach task file to who posted/created the task.
+
+
+Task Assignment: Sandeep assigns the task to Sachin.
+createdBy: Sandeep.
+assignedTo: Sachin.
+
+Adding Comments: Any user (e.g., Sachin) can add a comment. Their userId is linked to the comment in the comments array under the user field.

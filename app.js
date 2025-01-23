@@ -26,6 +26,7 @@ app.get('/', (req, res) =>{
 });
 
 // API routes
+// console.log(app._router.stack); // This will log all registered routes
 app.use('/api/auth', authRoutes); 
 app.use('/api/tasks', taskRoutes); 
 
