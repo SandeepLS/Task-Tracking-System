@@ -7,6 +7,7 @@ const taskSchema = new mongoose.Schema({
     status: { type: String, enum: ['open', 'in-progress', 'completed'], default: 'open' },
     assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    teamId: { type: mongoose.Schema.Types.ObjectId, ref: 'Team' }, // Optional team association
     comments: [
         {
             user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
@@ -14,7 +15,12 @@ const taskSchema = new mongoose.Schema({
             createdAt: { type: Date, default: Date.now },
         },
     ],
-    attachments: [String], // URLs or file paths to attachments
+    attachments: [
+        {
+            user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+            attachmentUrl: { type: String, required: true },
+        },
+    ], 
 }, { timestamps: true });
 
 module.exports = mongoose.model('Task', taskSchema);

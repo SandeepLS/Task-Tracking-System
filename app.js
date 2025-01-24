@@ -6,6 +6,7 @@ const connectDB = require('./config/db');
 // Import routes
 const authRoutes = require('./routes/authRoutes'); 
 const taskRoutes = require('./routes/taskRoutes');
+const teamRoutes = require('./routes/teamRoute');
 
 // Initialize the app
 const app = express();
@@ -29,6 +30,7 @@ app.get('/', (req, res) =>{
 // console.log(app._router.stack); // This will log all registered routes
 app.use('/api/auth', authRoutes); 
 app.use('/api/tasks', taskRoutes); 
+app.use('/api/teams', teamRoutes); 
 
 // Error handling middleware
 app.use((err, req, res, next) => {
