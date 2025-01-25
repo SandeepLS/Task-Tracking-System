@@ -1,4 +1,21 @@
-TaskMaster: A Collaborative Task Tracking System:-
+TaskMaster: A Collaborative Task Tracking System:- Backend Part
+
+User stories:
+> 1. As a user, I want to be able to create a new account so that I can access the task tracking platform.
+> 2. As a user, I want to log in to my account securely using my credentials.
+> 3. As a user, I want to view my profile and update my personal information.
+> 4. As a user, I want to create a new task with a title, description, and due date.
+> 5. As a user, I want to view a list of all tasks assigned to me.
+> 6. As a user, I want to mark a task as completed when I finish working on it.
+> 7. As a user, I want to assign a task to another team member.
+> 8. As a user, I want to filter tasks based on their status (e.g., open, completed).
+> 9. As a user, I want to search for tasks by title or description.
+> 10. As a user, I want to collaborate with team members by adding comments and attachments to tasks.
+> 11. As a user, I want to create a new team or project and invite team members to join.
+> 12. As a user, I want to securely log out of my account when I'm done using the platform.
+> 13. (Optional Extension) As a user, I want to receive notifications when a task is assigned to me or updated. (Implement real-time notifications using WebSockets or Server-Sent Events)
+> 14. (Optional but good to have) As a user, I want to integrate a generative AI model to automatically generate task descriptions or summaries based on user input, reducing manual effort in task creation.
+
 
 Step 1:- Project Setup:
 npm init
@@ -28,6 +45,10 @@ Step 2: User Authentication and Management
 Implement secure user authentication and authorization.
 Provide endpoints for user registration, login, and profile management.
 Use secure password hashing and consider implementing JWT for session management.
+
+> 1. As a user, I want to be able to create a new account so that I can access the task tracking platform.
+> 2. As a user, I want to log in to my account securely using my credentials.
+> 3. As a user, I want to view my profile and update my personal information.
 
 Install Required Dependencies:
 npm install bcryptjs jsonwebtoken express-validator
@@ -96,7 +117,14 @@ attachments: [String]  // URLs or file paths to attachments
     ]
 }
 
+> 7. As a user, I want to assign a task to another team member.
+// Create a new task, with or without a teamId. authController.js:
+
 -> Create controllers/taskController.js:
+> 4. As a user, I want to create a new task with a title, description, and due date.
+> 5. As a user, I want to view a list of all tasks assigned to me.
+> 6. As a user, I want to mark a task as completed when I finish working on it.
+
 Create: Post: http://localhost:3000/api/tasks
 GetallTask: Get: http://localhost:3000/api/tasks
 UpdateTask: Put: http://localhost:3000/api/tasks/:taskId
@@ -118,6 +146,7 @@ Adding Comments: Any user (e.g., Sachin) can add a comment. Their userId is link
 
 -> Create routes/taskRoutes.js:
 
+> 8 And 9. As a user, I want to search for tasks by title or description.
 -> Include features for task filtering, sorting, and searching.
 1.Fetch tasks assigned to the logged-in user:
   GET http://localhost:3000/api/tasks
@@ -171,11 +200,13 @@ POST: http://localhost:3000/api/teams/invite
 
 ->controllers/taskController.js:-
 
+> 11. As a user, I want to create a new team or project and invite team members to join.
 > User(Nicky) can create new team
 > User can invite another user, to the team, And he will become a member of the team.
 > Nicky can create new task, for existing team using teamId.
 
-> As a user, I want to collaborate with team members by adding comments and attachments to tasks.
+> 10. As a user, I want to collaborate with team members by adding comments and attachments to tasks.
+> If a user adding comment/attachment to the team task, he must be member of the team. if not get-error message.
   const task = await Task.findById(id).populate('teamId'); // Populate teamId for verification
   // If the task is associated with a team, verify membership
   if (task.teamId) {
@@ -187,4 +218,15 @@ POST: http://localhost:3000/api/teams/invite
 The .populate() method is a Mongoose function that replaces a referenced ObjectId field (in this case, teamId) with the actual document it references.
 The teamId in the Task schema is defined as a reference to the Team model. Using .populate('teamId') allows us to fetch the complete Team document associated with the task.
 
-> If a user adding comment/attachment to the team task, he must be member of the team. if not get-error message.
+> 12. As a user, I want to securely log out of my account when I'm done using the platform.
+Create a new file models/blacklistModel.js:
+Updated authController.js: logout Controller
+middlewares/blacklistMiddleware.js:
+Updated authMiddleware.js: Update the authMiddleware to Use checkBlacklist
+Updated authRoute.js: router.post('/logout', authMiddleware, logoutUser);
+
+Endpoint: POST /api/auth/logout
+Headers:
+{
+    "Authorization": "Bearer <JWT_TOKEN>"
+}
