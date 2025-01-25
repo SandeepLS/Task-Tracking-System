@@ -230,3 +230,7 @@ Headers:
 {
     "Authorization": "Bearer <JWT_TOKEN>"
 }
+Body:
+{
+    "message": "Logged out successfully."
+}
