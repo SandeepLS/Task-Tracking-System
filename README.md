@@ -18,7 +18,7 @@ User stories:
 
 
 Step 1:- Project Setup:
-npm init
+npm init1
 npm i express, dotenv
 npm install nodemon --save-dev
 git init, git status
