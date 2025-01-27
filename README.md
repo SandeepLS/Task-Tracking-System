@@ -6,7 +6,7 @@ User stories:
 > 3. As a user, I want to view my profile and update my personal information.
 > 4. As a user, I want to create a new task with a title, description, and due date.
 > 5. As a user, I want to view a list of all tasks assigned to me.
-> 6. As a user, I want to mark a task as completed when I finish working on it.
+> 6. As a user, I want to mark a task as completed when I finish working. well
 > 7. As a user, I want to assign a task to another team member.
 > 8. As a user, I want to filter tasks based on their status (e.g., open, completed).
 > 9. As a user, I want to search for tasks by title or description.
